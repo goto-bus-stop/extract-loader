@@ -90,6 +90,7 @@ describe("extractLoader", () => {
             expect(imgCss).to.be.a.file();
             expect(imgJpg).to.be.a.file();
             expect(imgCss).to.have.content.that.match(/ url\(hi-dist\.jpg\);/);
+            expect(imgCss).to.not.have.content.that.match(/ url\(undefined\);/);
         }));
     it("should extract the stylesheet.html and the referenced img.css as file, emit the files and rewrite all urls", () =>
         compile({testModule: "stylesheet.html"}).then(() => {
