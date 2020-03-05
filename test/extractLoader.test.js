@@ -130,13 +130,13 @@ describe("extractLoader", () => {
             const basePath = path.dirname(__dirname); // returns the parent dirname
             const dependencies = Array.from(
                 stats.compilation.fileDependencies,
-                dependency => dependency.slice(basePath.length)
+                dependency => dependency.slice(basePath.length).replace(/\\/g, '/')
             );
 
             expect(dependencies.sort()).to.eql(
                 [
-                    "/node_modules/css-loader/lib/css-base.js",
-                    "/node_modules/css-loader/lib/url/escape.js",
+                    "/node_modules/css-loader/dist/runtime/api.js",
+                    "/node_modules/css-loader/dist/runtime/getUrl.js",
                     "/test/modules/hi.jpg",
                     "/test/modules/img.css",
                     "/test/modules/stylesheet.html",
@@ -192,7 +192,7 @@ describe("extractLoader", () => {
         const errJs = path.resolve(__dirname, "dist/err.js");
 
         expect(loaderHtml).to.be.a.file();
-        expect(errJs).to.have.content("this is a syntax error\n");
+        expect(errJs).to.have.content.that.match(/this is a syntax error\r*\n/);
     }));
     it("should report syntax errors", () =>
         compile({testModule: "error-syntax.js"}).then(
