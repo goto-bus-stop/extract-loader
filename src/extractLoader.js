@@ -3,7 +3,7 @@ import path from "path";
 import {getOptions} from "loader-utils";
 import resolve from "resolve";
 import btoa from "btoa";
-import * as babel from "babel-core";
+import * as babel from "@babel/core";
 
 /**
  * @typedef {Object} LoaderContext
@@ -101,7 +101,7 @@ function evalDependencyGraph({loaderContext, src, filename, publicPath = ""}) {
             babelrc: false,
             presets: [
                 [
-                    "env", {
+                    "@babel/preset-env", {
                         modules: "commonjs",
                     },
                 ],
