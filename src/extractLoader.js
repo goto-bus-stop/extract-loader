@@ -3,7 +3,7 @@ import path from "path";
 import {getOptions} from "loader-utils";
 import resolve from "resolve";
 import btoa from "btoa";
-import * as babel from "babel-core";
+import * as babel from "@babel/core";
 
 /**
  * @typedef {Object} LoaderContext
@@ -101,13 +101,13 @@ function evalDependencyGraph({loaderContext, src, filename, publicPath = ""}) {
             babelrc: false,
             presets: [
                 [
-                    require("babel-preset-env"), {
+                    require("@babel/preset-env"), {
                         modules: "commonjs",
                         targets: {nodejs: "current"},
                     },
                 ],
             ],
-            plugins: [require("babel-plugin-add-module-exports")],
+            plugins: [require("add-module-exports")],
         }).code;
 
         const script = new vm.Script(src, {
