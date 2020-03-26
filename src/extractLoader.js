@@ -95,7 +95,6 @@ function evalDependencyGraph({loaderContext, src, filename, publicPath = ""}) {
 
     async function evalModule(src, filename) {
         const rndPlaceholder = "__EXTRACT_LOADER_PLACEHOLDER__" + rndNumber() + rndNumber();
-        const rndPlaceholderPattern = new RegExp(rndPlaceholder, "g");
 
         src = babel.transform(src, {
             babelrc: false,
@@ -103,11 +102,11 @@ function evalDependencyGraph({loaderContext, src, filename, publicPath = ""}) {
                 [
                     require("@babel/preset-env"), {
                         modules: "commonjs",
-                        targets: {nodejs: "current"},
+                        targets: { node: "current"},
                     },
                 ],
             ],
-            plugins: [require("add-module-exports")],
+            plugins: [require("babel-plugin-add-module-exports")],
         }).code;
 
         const script = new vm.Script(src, {
